@@ -1,2 +1,2 @@
 # vavenv
-Vagant-Ansible-VirtualEnv
+Vagrant-Ansible-VirtualEnv
