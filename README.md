@@ -1,0 +1,2 @@
+# vavenv
+Vagant-Ansible-VirtualEnv
