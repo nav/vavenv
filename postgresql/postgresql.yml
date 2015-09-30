@@ -1,14 +1,6 @@
 ---
 - hosts: all
   sudo: true
-  vars:
-    postgresql_authentication:
-      - type: host
-        user: postgres
-        method: md5
-        database: all
-        address: "0.0.0.0/0"
-
   tasks:
     - name: update apt repo
       apt: update-cache=yes cache_valid_time=3600

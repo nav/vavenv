@@ -12,6 +12,8 @@
       apt: name={{ item }} state=latest
       with_items:
         - mysql-server
+        - mysql-dev
+        - libmysqlclient-dev
         - python-mysqldb
 
     - name: create mysql root password
