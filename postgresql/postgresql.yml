@@ -1,0 +1,74 @@
+---
+- hosts: all
+  sudo: true
+  vars:
+    postgresql_authentication:
+      - type: host
+        user: postgres
+        method: md5
+        database: all
+        address: "0.0.0.0/0"
+
+  tasks:
+    - name: update apt repo
+      apt: update-cache=yes cache_valid_time=3600
+
+    - name: upgrade all packages
+      apt: upgrade=dist
+
+    - name: adding APT repository key
+      when: ansible_os_family == 'Debian'
+      apt_key:
+        id: ACCC4CF8
+        url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+
+    - name: add postgresql official APT repository
+      apt_repository:
+        repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_distribution_release}}-pgdg main"
+
+    - name: install postgresql
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+        cache_valid_time: 3600
+      with_items:
+        - postgresql-9.4
+        - postgresql-contrib-9.4
+
+    - name: make postgresql run on all interfaces
+      lineinfile: 
+        dest: /etc/postgresql/9.4/main/postgresql.conf 
+        regexp: ^\#listen_addresses 
+        line: "listen_addresses = '*'"
+
+    - name: allow remote access
+      lineinfile: 
+        dest: /etc/postgresql/9.4/main/pg_hba.conf
+        regexp: ^host        all
+        line: "host        all        all        0.0.0.0/0        md5"
+        insertafter: EOF    
+
+    - name: install required modules
+      apt: name="{{ item }}" state=latest
+      with_items:
+        - python-dev
+        - python-setuptools
+        - python-psycopg2
+        - libpq-dev
+
+    - name: create postgres password
+      command: /usr/bin/openssl rand -base64 16
+      register: postgres_password
+
+    - name: set postgres password
+      sudo_user: postgres
+      postgresql_user:
+        name: postgres
+        password: "{{ postgres_password.stdout }}"
+
+    - name: copy pgpass
+      template: src=pgpass dest=/root/.pgpass owner=root mode=0600
+
+    - name: restart postgresql
+      service: name=postgresql state=restarted
