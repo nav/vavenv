@@ -26,6 +26,7 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.network "forwarded_port", guest: 3306, host: 3306
   config.vm.network "forwarded_port", guest: 5432, host: 5432
+  config.vm.network "forwarded_port", guest: 15672, host: 15672
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -40,7 +41,8 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "../bccf/bccf", "/srv/bccf"
+  config.vm.synced_folder "../procurify/procurify", "/srv/procurify"
+  config.vm.synced_folder "../procurify/meta", "/srv/meta"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.

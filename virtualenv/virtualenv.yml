@@ -4,12 +4,6 @@
   vars:
     envs_root: /home/vagrant/Envs
   tasks:
-    - name: update apt repo
-      apt: update-cache=yes cache_valid_time=3600
-
-    - name: upgrade all packages
-      apt: upgrade=dist
-
     - name: install project pre-requisites
       apt: name={{ item }} state=installed
       with_items:

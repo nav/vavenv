@@ -1,18 +1,15 @@
 ---
 - hosts: all
   sudo: true
+  handlers:
+    - name: restart mysql
+      service: name=mysql state=restarted
+
   tasks:
-    - name: update apt repo
-      apt: update-cache=yes cache_valid_time=3600
-
-    - name: upgrade all packages
-      apt: upgrade=dist
-
     - name: install mysql
       apt: name={{ item }} state=latest
       with_items:
         - mysql-server
-        - mysql-dev
         - libmysqlclient-dev
         - python-mysqldb
 
@@ -45,14 +42,12 @@
         name: "root"
         host: "%" 
         password: "{{ mysql_root_pass.stdout }}"
-        priv: "*.*:ALL" 
+        priv: "*.*:ALL,GRANT" 
         state: present
-
-    - name: restart mysql
-      service: name=mysql state=restarted
 
     - name: delete anonymous mysql server user for localhost
       mysql_user: name="" state=absent
 
     - name: remove the mysql test database
       mysql_db: name=test state=absent
+      notify: restart mysql

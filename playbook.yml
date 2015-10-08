@@ -11,7 +11,14 @@
     - name: set hostname
       hostname: name=dev
 
+    - name: install common tools
+      apt: name={{ item }} state=installed
+      with_items:
+        - git
+        - mercurial
+
 - include: virtualenv/virtualenv.yml
 - include: mysql/mysql.yml
 - include: postgresql/postgresql.yml
+- include: rabbitmq/rabbitmq.yml
 - include: memcache/memcache.yml
