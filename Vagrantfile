@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+$enable_serial_logging = false
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -26,6 +28,7 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.network "forwarded_port", guest: 3306, host: 3306
   config.vm.network "forwarded_port", guest: 5432, host: 5432
+  config.vm.network "forwarded_port", guest: 2812, host: 2812
   config.vm.network "forwarded_port", guest: 15672, host: 15672
 
   # Create a private network, which allows host-only access to the machine
@@ -43,6 +46,7 @@ Vagrant.configure(2) do |config|
   # argument is a set of non-required options.
   config.vm.synced_folder "../procurify/procurify", "/srv/procurify"
   config.vm.synced_folder "../procurify/meta", "/srv/meta"
+  config.vm.synced_folder "../bigdata", "/srv/bigdata"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.

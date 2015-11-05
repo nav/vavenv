@@ -16,9 +16,12 @@
       with_items:
         - git
         - mercurial
+        - monit
 
-- include: virtualenv/virtualenv.yml
-- include: mysql/mysql.yml
-- include: postgresql/postgresql.yml
-- include: rabbitmq/rabbitmq.yml
-- include: memcache/memcache.yml
+# - include: virtualenv/virtualenv.yml
+# - include: mysql/mysql.yml
+# - include: postgresql/postgresql.yml
+# - include: rabbitmq/rabbitmq.yml
+# - include: memcache/memcache.yml
+- include: nginx/main.yml
+- include: monit/main.yml
