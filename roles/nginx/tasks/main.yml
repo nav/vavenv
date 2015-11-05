@@ -1,0 +1,28 @@
+---
+- name: install project pre-requisites
+  apt: name={{ item }} state=installed
+  with_items:
+    - language-pack-en-base
+    - python-pycurl 
+    - libpcre3-dev
+    - python-pip
+
+- name: add nginx ppa
+  apt_repository: repo=ppa:nginx/stable
+
+- name: install nginx step 1
+  apt: name="nginx-common" state=installed
+
+- name: install nginx step 2
+  apt: name="nginx-full" state=installed
+
+- name: Install nginx site conf
+  template:
+    src: "site.conf"
+    dest: "/etc/nginx/conf.d/{{ item.name }}.conf"
+    owner: vagrant
+    group: vagrant
+    mode: 0600
+  with_items:
+    - "{{ projects }}"
+  notify: restart nginx

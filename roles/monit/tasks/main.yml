@@ -1,0 +1,40 @@
+---
+- name: Install apt packages
+  sudo: yes
+  apt: name="{{ item }}" state=installed
+  with_items:
+    - git
+    - libmysqlclient-dev
+    - libxml2-dev
+    - libxslt1-dev
+    - libjpeg-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - zlib1g-dev
+    - libpq-dev
+    - python-dev
+    - python-setuptools
+
+- name: make run dirs
+  sudo: yes
+  file: path={{ item.run_dir }} state=directory owner="{{ user }}" group="www-data" mode=0775
+  with_items:
+     - "{{ projects }}"
+
+- name: make log dirs
+  sudo: yes
+  file: path={{ item.log_dir }} state=directory owner="{{ user }}" group="www-data" mode=0775
+  with_items:
+     - "{{ projects }}"
+
+- name: Install monit conf
+  sudo: yes
+  template: src=default.conf dest=/etc/monit/conf.d/default.conf
+
+- name: Install app conf
+  sudo: yes
+  template: src=app.conf dest=/etc/monit/conf.d/{{ item.name }}_app.conf
+  with_items:
+    - "{{ projects }}"
+
+

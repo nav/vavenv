@@ -1,0 +1,9 @@
+---
+- projects:
+    name: procurify
+    path: /srv/procurify
+    virtualenv: /home/vagrant/Envs/procurify-emma-1.8
+    bin_dir: /home/vagrant/Envs/procurify-emma-1.8/bin
+    run_dir: /home/vagrant/Envs/procurify-emma-1.8/run
+    log_dir: /home/vagrant/Envs/procurify-emma-1.8/log
+    uwsgi: /srv/procurify/procurify/uwsgi/development.ini
