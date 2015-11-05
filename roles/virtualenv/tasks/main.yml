@@ -1,0 +1,33 @@
+---
+- name: install project pre-requisites
+  apt: name={{ item }} state=installed
+  with_items:
+    - language-pack-en-base
+    - python-setuptools
+    - python-dev
+    - libpq-dev
+    - python-software-properties
+    - python-pip
+    - libjpeg-dev
+    - libxml2-dev
+    - libxslt-dev
+    - libfreetype6-dev
+    - fontconfig
+
+- name: install pip
+  easy_install: name=pip
+
+- name: install pip requirements
+  pip: name={{ item }}
+  with_items:
+    - virtualenv
+    - virtualenvwrapper
+
+- name: install virtualenvwrapper
+  file: path="{{ envs_root }}" state=directory mode=0755 owner=vagrant group=vagrant
+
+- name: update dotprofile with virtualenvwrapper
+  lineinfile: dest="/home/vagrant/.profile" insertafter=EOF line="{{ item }}"
+  with_items:
+    - "export WORKON_HOME={{ envs_root }}"
+    - "source /usr/local/bin/virtualenvwrapper.sh"

@@ -1,7 +1,12 @@
 ---
-- hosts: all
-  sudo: true
+
+- name: Gather data about all servers and run common tasks
+  hosts: all
+  sudo: yes
+  gather_facts: yes
   tasks:
+    - debug: Gather Facts
+
     - name: update apt repo
       apt: update-cache=yes cache_valid_time=3600
 
@@ -17,8 +22,13 @@
         - git
         - mercurial
 
-- include: virtualenv/virtualenv.yml
-- include: mysql/mysql.yml
-- include: postgresql/postgresql.yml
-- include: rabbitmq/rabbitmq.yml
-- include: memcache/memcache.yml
+- name: Install roles
+  hosts: all
+  sudo: yes
+  roles:
+    - virtualenv
+    - mysql
+    - postgresql
+    - memcache
+    - rabbitmq
+
