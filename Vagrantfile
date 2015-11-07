@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
-  # Every Vagrant development environment requires a box. You can search for
+  # Every Vagrant developme nt environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "ubuntu/trusty64"
 
@@ -45,8 +45,6 @@ Vagrant.configure(2) do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   config.vm.synced_folder "../procurify/procurify", "/srv/procurify"
-  config.vm.synced_folder "../procurify/meta", "/srv/meta"
-  config.vm.synced_folder "../bigdata", "/srv/bigdata"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.

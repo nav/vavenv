@@ -1,6 +1,6 @@
 ---
-- projects:
-    name: procurify
+projects:
+  - name: procurify
     path: /srv/procurify
     virtualenv: /home/vagrant/Envs/procurify-emma-1.8
     bin_dir: /home/vagrant/Envs/procurify-emma-1.8/bin
