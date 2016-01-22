@@ -2,11 +2,9 @@
 
 - name: Gather data about all servers and run common tasks
   hosts: all
-  sudo: yes
+  become: yes
   gather_facts: yes
   tasks:
-    - debug: Gather Facts
-
     - name: update apt repo
       apt: update-cache=yes cache_valid_time=3600
 
@@ -22,15 +20,18 @@
         - git
         - mercurial
         - monit
+        - libssl-dev
+        - libffi-dev
 
 - name: Install roles
   hosts: all
-  sudo: yes
+  become: yes
   roles:
     - virtualenv
+    - memcache
     - mysql
     - postgresql
-    - memcache
     - rabbitmq
+    - nodejs
     - nginx
     - monit

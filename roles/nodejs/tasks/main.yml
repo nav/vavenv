@@ -1,0 +1,14 @@
+---
+- name: install nodejs apt key
+  apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key id=68576280
+
+- name: add nodejs repository
+  apt_repository: repo='deb https://deb.nodesource.com/node_5.x trusty main'
+
+- name: update apt repo
+  apt: update-cache=yes
+
+- name: install common tools
+  apt: name={{ item }} state=installed
+  with_items:
+    - nodejs
