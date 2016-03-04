@@ -3,7 +3,7 @@
   apt: name={{ item }} state=installed
   with_items:
     - language-pack-en-base
-    - python-pycurl 
+    - python-pycurl
     - libpcre3-dev
     - python-pip
 
@@ -20,9 +20,8 @@
   template:
     src: "site.conf"
     dest: "/etc/nginx/conf.d/{{ item.name }}.conf"
-    owner: vagrant
-    group: vagrant
+    owner: root
+    group: root
     mode: 0600
-  with_items:
-    - "{{ projects }}"
+  with_items: projects
   notify: restart nginx

@@ -24,10 +24,10 @@
     - virtualenvwrapper
 
 - name: install virtualenvwrapper
-  file: path="{{ envs_root }}" state=directory mode=0755 owner=vagrant group=vagrant
+  file: path="{{ envs_root }}" state=directory mode=0755 owner={{ user }} group={{ user }}
 
 - name: update dotprofile with virtualenvwrapper
-  lineinfile: dest="/home/vagrant/.profile" insertafter=EOF line="{{ item }}"
+  lineinfile: dest="/home/{{ user }}/.profile" insertafter=EOF line="{{ item }}"
   with_items:
     - "export WORKON_HOME={{ envs_root }}"
     - "source /usr/local/bin/virtualenvwrapper.sh"

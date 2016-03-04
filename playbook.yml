@@ -1,37 +1,34 @@
 ---
 
-- name: Gather data about all servers and run common tasks
-  hosts: all
-  become: yes
-  gather_facts: yes
-  tasks:
-    - name: update apt repo
-      apt: update-cache=yes cache_valid_time=3600
-
-    - name: upgrade all packages
-      apt: upgrade=dist
-
-    - name: set hostname
-      hostname: name=dev
-
-    - name: install common tools
-      apt: name={{ item }} state=installed
-      with_items:
-        - git
-        - mercurial
-        - monit
-        - libssl-dev
-        - libffi-dev
+# - name: Gather data about all servers and run common tasks
+#   hosts: all
+#   become: yes
+#   gather_facts: yes
+#   tasks:
+#     - name: update apt repo
+#       apt: update-cache=yes cache_valid_time=3600
+#
+#     - name: upgrade all packages
+#       apt: upgrade=dist
+#
+#     - name: set hostname
+#       hostname: name=dev
+#
+#     - name: install common tools
+#       apt: name={{ item }} state=installed
+#       with_items:
+#         - git
+#         - mercurial
+#         - monit
+#         - libssl-dev
+#         - libffi-dev
 
 - name: Install roles
   hosts: all
   become: yes
   roles:
-    - virtualenv
-    - memcache
-    - mysql
-    - postgresql
-    - rabbitmq
-    - nodejs
-    - nginx
-    - monit
+    - common
+    # - virtualenv
+    # - memcache
+    # - postgresql
+    # - nginx

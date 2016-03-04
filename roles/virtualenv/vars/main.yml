@@ -1,2 +1,2 @@
 ---
-envs_root: /home/vagrant/Envs
+envs_root: /home/{{ user }}/Envs
