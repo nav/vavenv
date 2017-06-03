@@ -1,11 +1,11 @@
 ---
 user: nav
 projects:
-  - name: perfin
-    domain: perfin.tech
-    path: /srv/perfin
-    virtualenv: "/home/{{ user }}/Envs/perfin"
-    bin_dir: "/home/{{ user }}/Envs/perfin/bin"
-    run_dir: "/srv/perfin/run"
-    log_dir: "/srv/perfin/log"
-    uwsgi: "/srv/perfin/project/config/uwsgi.ini"
+  - name: woodhub
+    domain: woodhub.com
+    path: /srv/woodhub
+    virtualenv: "/home/{{ user }}/Envs/woodhub"
+    bin_dir: "/home/{{ user }}/Envs/woodhub/bin"
+    run_dir: "/srv/woodhub/run"
+    log_dir: "/srv/woodhub/log"
+    uwsgi: "/srv/woodhub/woodhub/uwsgi.ini"

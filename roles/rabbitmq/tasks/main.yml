@@ -3,7 +3,7 @@
   apt: pkg=python-software-properties state=installed
 
 - name: adding APT repository key
-  apt_key: url=https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
+  apt_key: url=https://www.rabbitmq.com/rabbitmq-release-signing-key.asc
 
 - name: add rabbitmq official apt repository
   apt_repository: repo='deb http://www.rabbitmq.com/debian/ testing main' state=present
@@ -27,14 +27,14 @@
   template: src=rabbitmqpass dest=/root/.rabbitmqpass owner=root mode=0600
 
 - name: add user
-  rabbitmq_user: 
-    user: rabbitmq 
+  rabbitmq_user:
+    user: rabbitmq
     password: "{{ rabbitmq_pass.stdout }}"
-    tags: "administrator,rabbitmq" 
-    vhost: / 
-    configure_priv: .* 
-    write_priv: .* 
-    read_priv: .* 
+    tags: "administrator,rabbitmq"
+    vhost: /
+    configure_priv: .*
+    write_priv: .*
+    read_priv: .*
     state: present
 
 - name: remove default guest user

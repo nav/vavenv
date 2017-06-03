@@ -1,41 +1,32 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-$enable_serial_logging = false
-
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
-Vagrant.configure(2) do |config|
+Vagrant.configure("2") do |config|
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
-  # Every Vagrant developme nt environment requires a box. You can search for
+  # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/xenial64"
 
-  # Disable automatic box update checking. If you disable this, then
-  # boxes will only be checked for updates when the user runs
-  # `vagrant box outdated`. This is not recommended.
-  config.vm.box_check_update = false
+  # The url from where the 'config.vm.box' box will be fetched if it
+  # doesn't already exist on the user's system.
+  #config.vm.box_url = "ubuntu/xenial64"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  # config.vm.network "forwarded_port", guest: 80, host: 8000
-  # config.vm.network "forwarded_port", guest: 8080, host: 8080
-  # config.vm.network "forwarded_port", guest: 3306, host: 3306
-  # config.vm.network "forwarded_port", guest: 5432, host: 5432
-  # config.vm.network "forwarded_port", guest: 2812, host: 2812
-  # config.vm.network "forwarded_port", guest: 15672, host: 15672
-
-  config.vm.network "private_network", type: "dhcp"
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 8080, host: 8080
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network "public_network", bridge: "en0: Wi-Fi (AirPort)", ip: "192.168.0.10"
+  config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -46,18 +37,23 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "../perfin/perfin", "/srv/perfin/project"
-  config.vm.synced_folder "../woodhub", "/srv/woodhub"
+  # config.vm.synced_folder "../data", "/vagrant_data"
+  #config.vm.synced_folder "../perfin", "/srv/perfin/project"
+  #config.vm.synced_folder "../woodhub", "/srv/woodhub"
+  #config.vm.synced_folder "../ledgr/ledgr", "/srv/ledgr"
+  config.vm.synced_folder "../bccf", "/srv/bccf"
+  config.vm.synced_folder "../bccf-shop", "/srv/bccf-shop"
+  #config.vm.synced_folder "../frpbc", "/srv/frpbc"
+  #config.vm.synced_folder "../shop", "/srv/shop"
+  #config.vm.synced_folder "../kxwheels", "/srv/kxwheels"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  #
-  #   # Customize the amount of memory on the VM:
+    #vb.gui = true
+    vb.name = "vavenv"
     vb.memory = "2048"
   end
   #
@@ -74,7 +70,12 @@ Vagrant.configure(2) do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   apt-get update
+  #   apt-get install -y apache2
+  # SHELL
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "playbook.yml"
+    ansible.ask_vault_pass = true
   end
 end

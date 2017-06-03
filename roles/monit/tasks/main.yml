@@ -1,4 +1,7 @@
 ---
+- include_vars: vault.yml
+
+
 - name: Install apt packages
   sudo: yes
   apt: name="{{ item }}" state=installed
@@ -36,5 +39,3 @@
   template: src=app.conf dest=/etc/monit/conf.d/{{ item.name }}_app.conf
   with_items:
     - "{{ projects }}"
-
-

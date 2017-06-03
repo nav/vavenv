@@ -28,7 +28,9 @@
   become: yes
   roles:
     - common
-    # - virtualenv
-    # - memcache
-    # - postgresql
-    # - nginx
+    - virtualenv
+    - memcache
+    - postgresql
+    - nginx
+    - rabbitmq
+    # - monit

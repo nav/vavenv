@@ -58,13 +58,13 @@
   lineinfile: dest={{ sshd_config }} regexp="^#?PermitEmptyPasswords" line="PermitEmptyPasswords no"
   notify: restart sshd
 
-- name: Disable password login
-  lineinfile: dest={{ sshd_config }} regexp="^#?PasswordAuthentication" line="PasswordAuthentication no"
-  notify: restart sshd
+# - name: Disable password login
+#   lineinfile: dest={{ sshd_config }} regexp="^#?PasswordAuthentication" line="PasswordAuthentication no"
+#   notify: restart sshd
 
-- name: Enable PAM
-  lineinfile: dest={{ sshd_config }} regexp="^#?UsePAM" line="UsePAM yes"
-  notify: restart sshd
+# - name: Enable PAM
+#   lineinfile: dest={{ sshd_config }} regexp="^#?UsePAM" line="UsePAM yes"
+#   notify: restart sshd
 
 - name: install monit conf
   become: yes
